@@ -5,10 +5,12 @@ for (let i = 1; i <= 16; i++) {
     row.classList.add('flex');
     row.classList.add('row');
     for (let j = 1; j <= 16; j++) {
-        const col = document.createElement('div');
-        col.classList.add('flex');
-        col.classList.add('tile');
-        row.appendChild(col);
+        const tile = document.createElement('div');
+        tile.classList.add('flex');
+        tile.classList.add('tile');
+        tile.addEventListener('mouseenter', event => event.target.classList.add('hovered'));
+        //tile.addEventListener('mouseleave', event => event.target.classList.remove('hovered'));
+        row.appendChild(tile);
     }
     container.appendChild(row);
 }
