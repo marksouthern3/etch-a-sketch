@@ -1,27 +1,51 @@
 const container = document.querySelector('#container');
-
 let tileList = [];
 
-for (let i = 1; i <= 16; i++) {
-    const row = document.createElement('div');
-    row.classList.add('flex');
-    row.classList.add('row');
-    for (let j = 1; j <= 16; j++) {
-        const tile = document.createElement('div');
-        tile.classList.add('flex');
-        tile.classList.add('tile');
-        tile.addEventListener('mouseenter', event => event.target.classList.add('hovered'));
-        //tile.addEventListener('mouseleave', event => event.target.classList.remove('hovered'));
-        row.appendChild(tile);
-        tileList.push(tile);
-    }
-    container.appendChild(row);
+function onHover(event) {
+    event.target.classList.add('hovered');
 }
 
-const resetButton = document.querySelector('#resetButton');
-
-resetButton.addEventListener('click', event => {
-    for (const tile of tileList) {
-        tile.classList.remove('hovered');
+function createGrid(size) {
+    for (let i = 1; i <= size; i++) {
+        const row = document.createElement('div');
+        row.classList.add('flex');
+        row.classList.add('row');
+        for (let j = 1; j <= size; j++) {
+            const tile = document.createElement('div');
+            tile.classList.add('flex');
+            tile.classList.add('tile');
+            tile.addEventListener('mouseenter', onHover);
+            row.appendChild(tile);
+            tileList.push(tile);
+        }
+        container.appendChild(row);
     }
-});
+}
+
+function deleteGrid() {
+    while (container.firstChild) container.removeChild(container.lastChild); // remove all children from container
+}
+
+function resizeGrid() {
+    deleteGrid();
+    tileList = [];
+    let input = prompt('What size grid?');
+    let size = parseInt(input);
+    // check that input is valid
+    while (!size || size < 1 || size > 100) {
+        input = prompt('What size grid? (Please enter a number from 1 to 100.)');
+        size = parseInt(input);
+    }
+    createGrid(size);
+}
+
+function clearGrid() {
+    for (const tile of tileList) tile.classList.remove('hovered');
+}
+
+const newGridButton = document.querySelector('#newGridButton');
+newGridButton.addEventListener('click', resizeGrid);
+const clearGridButton = document.querySelector('#clearGridButton');
+clearGridButton.addEventListener('click', clearGrid);
+
+createGrid(16);
