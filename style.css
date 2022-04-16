@@ -34,7 +34,3 @@
 .tile {
     flex: 1;
 }
-
-.hovered {
-    background-color: black;
-}
