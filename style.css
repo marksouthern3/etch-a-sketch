@@ -1,0 +1,23 @@
+
+.flex {
+    display: flex;
+}
+
+.dirColumn {
+    flex-direction: column;
+}
+
+.container {
+    height: 500px;
+    width: 500px;
+    background-color: blue;
+}
+
+.row {
+    flex: 1;
+}
+
+.tile {
+    border: 2px solid black;
+    flex: 1;
+}
