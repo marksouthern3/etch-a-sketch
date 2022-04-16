@@ -8,15 +8,29 @@
 }
 
 .container {
-    height: 960px;
-    width: 960px;
+    height: 500px;
+    width: 500px;
     border: 2px solid black;
 }
 
-.row {
-    flex: 1;
+#content,
+#header,
+#footer,
+#buttons {
+    justify-content: center;
 }
 
+#content {
+    margin: 60px;
+    align-items: center;
+    gap: 5px;
+}
+
+#buttons {
+    gap: 5px;
+}
+
+.row,
 .tile {
     flex: 1;
 }
