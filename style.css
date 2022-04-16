@@ -32,6 +32,11 @@
     justify-content: left;
 }
 
+#info {
+    width: 500px;
+    justify-content: right;
+}
+
 .row,
 .tile {
     flex: 1;
