@@ -28,6 +28,8 @@
 
 #buttons {
     gap: 5px;
+    width: 500px;
+    justify-content: left;
 }
 
 .row,

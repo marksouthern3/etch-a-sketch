@@ -1,28 +1,30 @@
 const container = document.querySelector('#container');
 
 let mode = 'default';
+let eraser = false;
 
 function onHover(event) {
-    switch(mode) {
-        case 'default':
-            event.target.style['background-color'] = 'rgb(0, 0, 0)';
-            break;
-        case 'rainbow':
-            red = Math.floor(Math.random() * 256);
-            green = Math.floor(Math.random() * 256);
-            blue = Math.floor(Math.random() * 256);
-            event.target.style['background-color'] = `rgb(${red}, ${green}, ${blue})`;
-            break;
-        case 'pressure':
-            let colourString = event.target.style['background-color'];
-            let colour = colourString.slice(4, colourString.length - 1).split(',');
-            for (let i = 0; i <= 2; i++) colour[i] = parseInt(colour[i]);
-            let colourValue = Math.max(0, colour[0] - 20)
-            event.target.style['background-color'] = `rgb(${colourValue}, ${colourValue}, ${colourValue})`;
-            break;
-        case 'eraser':
-            event.target.style['background-color'] = 'rgb(255, 255, 255)';
-            break;
+    if (eraser) {
+        event.target.style['background-color'] = 'rgb(255, 255, 255)';
+    } else {
+        switch(mode) {
+            case 'default':
+                event.target.style['background-color'] = 'rgb(0, 0, 0)';
+                break;
+            case 'rainbow':
+                red = Math.floor(Math.random() * 256);
+                green = Math.floor(Math.random() * 256);
+                blue = Math.floor(Math.random() * 256);
+                event.target.style['background-color'] = `rgb(${red}, ${green}, ${blue})`;
+                break;
+            case 'pressure':
+                let colourString = event.target.style['background-color'];
+                let colour = colourString.slice(4, colourString.length - 1).split(',');
+                for (let i = 0; i <= 2; i++) colour[i] = parseInt(colour[i]);
+                let colourValue = Math.max(0, colour[0] - 20)
+                event.target.style['background-color'] = `rgb(${colourValue}, ${colourValue}, ${colourValue})`;
+                break;
+        }
     }
 }
 
@@ -57,6 +59,8 @@ function resizeGrid() {
         size = parseInt(input);
     }
     createGrid(size);
+    mode = 'default';
+    eraser = false;
 }
 
 function clearGrid() {
@@ -69,15 +73,24 @@ newGridButton.addEventListener('click', resizeGrid);
 const clearGridButton = document.querySelector('#clearGridButton');
 clearGridButton.addEventListener('click', clearGrid);
 const defaultButton = document.querySelector('#defaultButton');
-defaultButton.addEventListener('click', () => mode = 'default');
+defaultButton.addEventListener('click', () => {
+    eraser = false;
+    mode = 'default';
+});
 const rainbowButton = document.querySelector('#rainbowButton');
-rainbowButton.addEventListener('click', () => mode = 'rainbow');
+rainbowButton.addEventListener('click', () => {
+    eraser = false;
+    mode = 'rainbow';
+});
 const pressureButton = document.querySelector('#pressureButton');
 pressureButton.addEventListener('click', () => {
     clearGrid();
+    eraser = false;
     mode = 'pressure';
 });
-const eraserButton = document.querySelector('#eraserButton');
-eraserButton.addEventListener('click', () => mode = 'eraser');
+
+window.addEventListener('keydown', event => {
+    if (event.code === 'KeyE') eraser = !eraser;
+});
 
 createGrid(16);
